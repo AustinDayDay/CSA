@@ -5,9 +5,8 @@ import (
 	"math/rand"
 	"net"
 	"net/rpc"
-	"uk.ac.bris.cs/distributed2/secretstrings/stubs"
-
 	"time"
+	"uk.ac.bris.cs/distributed2/secretstrings/stubs"
 )
 
 /** Super-Secret `reversing a string' method we can't allow clients to see. **/
@@ -33,6 +32,6 @@ func main() {
 	rand.Seed(time.Now().UnixNano())
 	rpc.Register(&SecretStringOperations{})
 	listener, _ := net.Listen("tcp", ":"+*pAddr)
-	//defer listener.Close()
+	defer listener.Close()
 	rpc.Accept(listener)
 }
