@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"math/rand"
 	"net"
 	"net/rpc"
@@ -22,7 +23,9 @@ func ReverseString(s string, i int) string {
 type SecretStringOperations struct{}
 
 func (s *SecretStringOperations) Reverse(req stubs.Request, res stubs.Response) (err error) {
+	fmt.Println("Reverse has been called")
 	res.Message = ReverseString(req.Message, 10)
+
 	return
 }
 
