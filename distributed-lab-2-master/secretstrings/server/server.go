@@ -12,6 +12,7 @@ import (
 
 /** Super-Secret `reversing a string' method we can't allow clients to see. **/
 func ReverseString(s string, i int) string {
+	fmt.Println("ReverseString is called")
 	time.Sleep(time.Duration(rand.Intn(i)) * time.Second)
 	runes := []rune(s)
 	for i, j := 0, len(runes)-1; i < j; i, j = i+1, j-1 {
@@ -23,7 +24,6 @@ func ReverseString(s string, i int) string {
 type SecretStringOperations struct{}
 
 func (s *SecretStringOperations) Reverse(req stubs.Request, res stubs.Response) (err error) {
-	fmt.Println("Reverse has been called test")
 	res.Message = ReverseString(req.Message, 10)
 
 	return err
