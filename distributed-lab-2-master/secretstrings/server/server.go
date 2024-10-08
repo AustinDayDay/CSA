@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"math/rand"
 	"net"
 	"net/rpc"
@@ -12,7 +11,6 @@ import (
 
 /** Super-Secret `reversing a string' method we can't allow clients to see. **/
 func ReverseString(s string, i int) string {
-	fmt.Println("ReverseString is called")
 	time.Sleep(time.Duration(rand.Intn(i)) * time.Second)
 	runes := []rune(s)
 	for i, j := 0, len(runes)-1; i < j; i, j = i+1, j-1 {
@@ -38,7 +36,7 @@ func main() {
 	pAddr := flag.String("port", ":8030", "Port to listen on")
 	flag.Parse()
 	rand.Seed(time.Now().UnixNano())
-	rpc.Register(SecretStringOperations{})
+	rpc.Register(&SecretStringOperations{})
 	listener, _ := net.Listen("tcp", *pAddr)
 	defer listener.Close()
 	rpc.Accept(listener)
