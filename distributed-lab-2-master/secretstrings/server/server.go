@@ -26,12 +26,12 @@ func (s *SecretStringOperations) Reverse(req stubs.Request, res stubs.Response) 
 	fmt.Println("Reverse has been called test")
 	res.Message = ReverseString(req.Message, 10)
 
-	return
+	return err
 }
 
 func (s *SecretStringOperations) FastReverse(req stubs.Request, res stubs.Response) (err error) {
 	res.Message = ReverseString(req.Message, 2)
-	return
+	return err
 }
 
 func main() {
