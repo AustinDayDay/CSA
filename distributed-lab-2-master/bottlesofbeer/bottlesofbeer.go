@@ -32,11 +32,11 @@ type Token struct {
 
 func bottlesOfBeer(numOfBottles int) {
 	if numOfBottles > 1 {
-		fmt.Println(numOfBottles, " Bottles of Beer on the wall, ", numOfBottles, " bottles of beer. Take one down, pass it around...")
+		fmt.Printf("%v Bottles of Beer on the wall, %v bottles of beer. Take one down, pass it around...\n", numOfBottles, numOfBottles)
 	} else if numOfBottles == 1 {
-		fmt.Println("1 Bottle of Beer on the wall, 1 bottle of beer. Take one down, pass it around...")
+		fmt.Printf("1 Bottle of Beer on the wall, 1 bottle of beer. Take one down, pass it around...\n")
 	} else {
-		fmt.Println("NO MORE BEER :(")
+		fmt.Printf("NO MORE BEER :(\n")
 	}
 
 }
