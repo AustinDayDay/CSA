@@ -58,7 +58,7 @@ func main() {
 	flag.Parse()
 	//TODO: Up to you from here! Remember, you'll need to both listen for
 	//RPC calls and make your own.
-	listener, _ := net.Listen("tcp", *thisPort)
+	listener, _ := net.Listen("tcp", ":"+*thisPort)
 	defer listener.Close()
 	rpc.Register(&BottlesOfBeer{})
 	if *bottles > 0 {
