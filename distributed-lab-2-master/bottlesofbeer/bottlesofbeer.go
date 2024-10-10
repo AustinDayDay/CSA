@@ -45,7 +45,11 @@ func passBottle(bottles int) {
 	reqs := Token{NumOfBottles: bottles}
 	resp := new(Token)
 	if !registered {
-		nextRound, _ = rpc.Dial("tcp", nextAddr)
+		var err error
+		nextRound, err = rpc.Dial("tcp", nextAddr)
+		if err != nil {
+			fmt.Println(err)
+		}
 		registered = true
 	}
 	nextRound.Go("BottlesOfBeer.Round", reqs, resp, nil)
@@ -58,12 +62,13 @@ func main() {
 	flag.Parse()
 	//TODO: Up to you from here! Remember, you'll need to both listen for
 	//RPC calls and make your own.
+	nextAddr = nextAddr
 	listener, _ := net.Listen("tcp", ":"+*thisPort)
 	defer listener.Close()
 	rpc.Register(&BottlesOfBeer{})
 	if *bottles > 0 {
 		bottlesOfBeer(int(*bottles))
-		go passBottle(*bottles - 1)
+		passBottle(*bottles - 1)
 	}
 	rpc.Accept(listener)
 }
