@@ -14,9 +14,9 @@ import (
 	"fmt"
 )
 
-func workerReverse(words []string, client *rpc.Client, responseChan chan []string) {
+func workerReverse(words []string, client *rpc.Client, start int, finish int, responseChan chan []string) {
 	finalResponse := []string{}
-	for i := 0; i < len(words); i++ {
+	for i := start; i < finish; i++ {
 		request := stubs.Request{Message: words[i]}
 		response := new(stubs.Response)
 		client.Call(stubs.PremiumReverseHandler, request, response)
@@ -48,7 +48,7 @@ func main() {
 	responseChans := []chan []string{make(chan []string), make(chan []string)}
 
 	for i := 0; i < 2; i++ {
-		go workerReverse(words, clients[i], responseChans[i])
+		go workerReverse(words,, start, finish clients[i], responseChans[i])
 	}
 
 	finalReversedWords := []string{}
