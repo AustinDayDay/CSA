@@ -15,21 +15,6 @@ var nextAddr string
 var registered = false
 var nextRound *rpc.Client
 
-type BottlesOfBeer struct{}
-
-func (b *BottlesOfBeer) Round(inToken Token, outToken *Token) (err error) {
-	bottles := inToken.NumOfBottles
-	bottlesOfBeer(bottles)
-	if bottles > 0 {
-		passBottle(bottles - 1)
-	}
-	return
-}
-
-type Token struct {
-	NumOfBottles int
-}
-
 func bottlesOfBeer(numOfBottles int) {
 	if numOfBottles > 1 {
 		fmt.Printf("%v Bottles of Beer on the wall, %v bottles of beer. Take one down, pass it around...\n", numOfBottles, numOfBottles)
@@ -53,6 +38,20 @@ func passBottle(bottles int) {
 		registered = true
 	}
 	nextRound.Go("BottlesOfBeer.Round", reqs, resp, nil)
+}
+
+type BottlesOfBeer struct{}
+type Token struct {
+	NumOfBottles int
+}
+
+func (b *BottlesOfBeer) Round(inToken Token, outToken *Token) (err error) {
+	bottles := inToken.NumOfBottles
+	bottlesOfBeer(bottles)
+	if bottles > 0 {
+		passBottle(bottles - 1)
+	}
+	return
 }
 
 func main() {
